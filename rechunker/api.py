@@ -7,6 +7,7 @@ from typing import Union
 import dask
 import dask.array
 import zarr
+from packaging.version import Version
 
 from rechunker.algorithm import rechunking_plan
 from rechunker.pipeline import CopySpecToPipelinesMixin
@@ -446,8 +447,11 @@ def _setup_rechunk(
             # Extract the array encoding to get a default chunking, a step
             # which will also ensure that the target chunking is compatible
             # with the current chunking (only necessary for on-disk arrays)
+            kws = {}
+            if Version(xarray.__version__) >= Version("2025.03.1"):
+                kws = {"zarr_format": 2}
             variable_encoding = extract_zarr_variable_encoding(
-                variable, raise_on_invalid=False, name=name
+                variable, raise_on_invalid=False, name=name, **kws
             )
             variable_chunks = target_chunks.get(name, variable_encoding["chunks"])
             if isinstance(variable_chunks, dict):
