@@ -26,7 +26,8 @@ dependencies = [
 ]
 [project.optional-dependencies]
 complete = [
-  "apache_beam",
+  # Min pin to avoid a compilation error with apache_beam when pip tries 2.27
+  "apache_beam>=2.45",
   "fsspec",
   "prefect<2",
   "pyyaml",
