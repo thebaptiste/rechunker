@@ -21,11 +21,13 @@ dynamic = [
 dependencies = [
   "dask[array,diagnostics]",
   "mypy_extensions",
+  "packaging",
   "zarr<3,>=2.11",
 ]
 [project.optional-dependencies]
 complete = [
-  "apache_beam",
+  # Min pin to avoid a compilation error with apache_beam when pip tries 2.27
+  "apache_beam>=2.28",
   "fsspec",
   "prefect<2",
   "pyyaml",
