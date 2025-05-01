@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-v0.5.4 - 2025-04-02
+v0.5.4 - 2025-05-01
 -------------------
 - Fix for xarray>=2025.03.1.  By `Pascal Bourgault <https://github.com/aulemahal>`_.
 
