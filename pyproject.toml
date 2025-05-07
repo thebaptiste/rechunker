@@ -22,7 +22,7 @@ dependencies = [
   "dask[array,diagnostics]",
   "mypy_extensions",
   "packaging",
-  "zarr<3,>=2.11",
+  "zarr>=2.11",
 ]
 [project.optional-dependencies]
 complete = [
