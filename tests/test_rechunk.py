@@ -9,7 +9,7 @@ import numpy
 import numpy as np
 import pytest
 import zarr
-from zarr.storage import RemoteStore
+from zarr.storage import LocalStore
 
 from rechunker import api
 
@@ -190,10 +190,10 @@ def test_get_dim_chunk(dask_chunks, chunk_ds, dim, target_chunks, expected):
 def target_store(tmp_path, request):
     if request.param == "mapper":
         pytest.importorskip("fsspec")
-        return RemoteStore(str(tmp_path) + "target.zarr")
+        return LocalStore(str(tmp_path) + "target.zarr")
     elif request.param == "group":
         pytest.importorskip("fsspec")
-        store = RemoteStore(str(tmp_path) + "group.target.zarr")
+        store = LocalStore(str(tmp_path) + "group.target.zarr")
         return zarr.group(store)
     else:
         return str(tmp_path / "mapper.target.zarr")
@@ -203,10 +203,10 @@ def target_store(tmp_path, request):
 def temp_store(tmp_path, request):
     if request.param == "mapper":
         pytest.importorskip("fsspec")
-        return RemoteStore(str(tmp_path) + "temp.zarr")
+        return LocalStore(str(tmp_path) + "temp.zarr")
     elif request.param == "group":
         pytest.importorskip("fsspec")
-        store = RemoteStore(str(tmp_path) + "group.temp.zarr")
+        store = LocalStore(str(tmp_path) + "group.temp.zarr")
         return zarr.group(store)
     else:
         return str(tmp_path / "mapper.temp.zarr")
@@ -496,7 +496,7 @@ def test_rechunk_dask_array(
 def test_rechunk_group(tmp_path, executor, source_store, target_store, temp_store):
     if source_store.startswith("mapper"):
         pytest.importorskip("fsspec")
-        store_source = RemoteStore(str(tmp_path) + source_store)
+        store_source = LocalStore(str(tmp_path) + source_store)
     else:
         store_source = str(tmp_path / source_store)
 
